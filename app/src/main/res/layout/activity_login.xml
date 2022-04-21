@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/ivLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtvLicor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/str_licoreria"
+        android:textColor="@color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLogin"
+        app:layout_constraintEnd_toStartOf="@+id/ivLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivLogin" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtvWelcome"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/str_inicio_sesion"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mtvLicor"
+        app:layout_constraintBottom_toTopOf="@+id/glLogin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_Google"
+        app:icon="@drawable/ic_google"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mtvWelcome"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtvPolicy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Términos y Condiciones"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
