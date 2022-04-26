@@ -1,10 +1,12 @@
 package com.grt.tiendalicoreria.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.edit
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,9 +14,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.preference.PreferenceManager
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.messaging.FirebaseMessaging
 import com.grt.tiendalicoreria.R
 import com.grt.tiendalicoreria.common.BaseActivity
+import com.grt.tiendalicoreria.data.Constants
 import com.grt.tiendalicoreria.databinding.ActivityMainBinding
 
 /**
@@ -45,6 +50,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //fcm
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val token = task.result
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                preferences.edit {
+                    putString(Constants.PROP_TOKEN, token)
+                        .apply()
+                }
+                Log.i("get token", token.toString())
+            } else {
+                Log.i("get token fail", task.exception.toString())
+            }
+        }
 
     }
 

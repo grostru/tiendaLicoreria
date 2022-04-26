@@ -2,6 +2,7 @@ package com.grt.tiendalicoreria.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,9 +15,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.AuthResult
 import androidx.annotation.NonNull
+import androidx.preference.PreferenceManager
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.grt.tiendalicoreria.R
 import com.grt.tiendalicoreria.common.BaseActivity
+import com.grt.tiendalicoreria.data.Constants
 import com.grt.tiendalicoreria.databinding.ActivityLoginBinding
 import com.grt.tiendalicoreria.ui.main.MainActivity
 
@@ -92,6 +96,33 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         val user = mAuth!!.currentUser
+                        if (user != null){
+                            Toast.makeText(applicationContext, "Bienvenido", Toast.LENGTH_SHORT).show()
+
+                            val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                            val token = preferences.getString(Constants.PROP_TOKEN, null)
+
+                            token?.let {
+                                val db = FirebaseFirestore.getInstance()
+                                val tokenMap = hashMapOf(Pair(Constants.PROP_TOKEN, token))
+
+                                db.collection(Constants.COLL_USERS)
+                                    .document(user.uid)
+                                    .collection(Constants.COLL_TOKENS)
+                                    .add(tokenMap)
+                                    .addOnSuccessListener {
+                                        Log.i("registered token", token)
+                                        /*preferences.edit {
+                                            putString(Constants.PROP_TOKEN, null)
+                                                .apply()
+                                        }*/
+                                    }
+                                    .addOnFailureListener {
+                                        Log.i("no registered token", token)
+                                    }
+                            }
+                        }
+
                         val intent = Intent(applicationContext, MainActivity::class.java)
                         startActivity(intent)
                     } else {

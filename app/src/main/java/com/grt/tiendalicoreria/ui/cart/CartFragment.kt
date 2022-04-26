@@ -167,7 +167,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), OnCartL
                 products.put(product.id!!, ProductOrderModel(product.id!!, product.name!!, product.newQuantity))
             }
 
-            val order = OrderModelDB(clientId = myUser.uid, products = products, totalPrice = totalPrice, status = 1)
+            val order = OrderModelDB(clientId = myUser.uid, clientName = myUser.displayName, products = products, totalPrice = totalPrice, status = 1)
 
             val db = FirebaseFirestore.getInstance()
             db.collection(Constants.COLL_REQUESTS)
